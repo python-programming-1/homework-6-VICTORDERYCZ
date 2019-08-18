@@ -44,7 +44,7 @@ def get_channel_list(vid_data):
             channel_list.append(element['channel_title'])
     return channel_list
 
-def get_channel_info(channel_info):
+def get_channel_info(channel_list):
 
     n = 0
     channel_info = []
@@ -74,20 +74,20 @@ def get_most_popular_and_least_popular_channel(info):
     
     index = 1
     most_popular_and_least_popular_channel['most_popular_channel'] = info[0]['channel_title']
-    most_popular_and_least_popular_channel['most_pop_num_views'] = info[0]['views']
+    most_popular_and_least_popular_channel['most_pop_num_views'] = int(info[0]['views'])
     while index < len(info):
-        if info[index]['views'] > most_popular_and_least_popular_channel['most_pop_num_views']:
+        if int(info[index]['views']) > most_popular_and_least_popular_channel['most_pop_num_views']:
             most_popular_and_least_popular_channel['most_popular_channel'] = info[index]['channel_title']
-            most_popular_and_least_popular_channel['most_pop_num_views'] = info[index]['views']
+            most_popular_and_least_popular_channel['most_pop_num_views'] = int(info[index]['views'])
         index += 1
 
     index = 1
     most_popular_and_least_popular_channel['least_popular_channel'] = info[0]['channel_title']
-    most_popular_and_least_popular_channel['least_pop_num_views'] = info[0]['views']
+    most_popular_and_least_popular_channel['least_pop_num_views'] = int(info[0]['views'])
     while index < len(info):
-        if info[index]['views'] < most_popular_and_least_popular_channel['least_pop_num_views']:
+        if int(info[index]['views']) < most_popular_and_least_popular_channel['least_pop_num_views']:
             most_popular_and_least_popular_channel['least_popular_channel'] = info[index]['channel_title']
-            most_popular_and_least_popular_channel['least_pop_num_views'] = info[index]['views']
+            most_popular_and_least_popular_channel['least_pop_num_views'] = int(info[index]['views'])
         index += 1  
     return most_popular_and_least_popular_channel
 
@@ -97,19 +97,19 @@ def get_most_liked_and_disliked_channel(info):
 
     index = 1
     most_liked_and_disliked_channel['most_liked_channel'] = info[0]['channel_title']
-    most_liked_and_disliked_channel['num_likes'] = info[0]['likes']
+    most_liked_and_disliked_channel['num_likes'] = int(info[0]['likes'])
     while index < len(info):
-        if info[index]['likes'] > most_liked_and_disliked_channel['num_likes']:
+        if int(info[index]['likes']) > most_liked_and_disliked_channel['num_likes']:
             most_liked_and_disliked_channel['most_liked_channel'] = info[index]['channel_title']
-            most_liked_and_disliked_channel['num_likes'] = info[index]['likes']
+            most_liked_and_disliked_channel['num_likes'] = int(info[index]['likes'])
         index += 1
     index = 1
     most_liked_and_disliked_channel['most_disliked_channel'] = info[0]['channel_title']
-    most_liked_and_disliked_channel['num_dislikes'] = info[0]['dislikes']
+    most_liked_and_disliked_channel['num_dislikes'] = int(info[0]['dislikes'])
     while index < len(info):
-        if info[index]['dislikes'] > most_liked_and_disliked_channel['num_dislikes']:
+        if int(info[index]['dislikes']) > most_liked_and_disliked_channel['num_dislikes']:
             most_liked_and_disliked_channel['most_disliked_channel'] = info[index]['channel_title']
-            most_liked_and_disliked_channel['num_dislikes'] = info[index]['dislikes']
+            most_liked_and_disliked_channel['num_dislikes'] = int(info[index]['dislikes'])
         index += 1
     return most_liked_and_disliked_channel
 
@@ -122,8 +122,8 @@ if __name__ == '__main__':
     channel_list = get_channel_list(vid_data)
     channel_info = get_channel_info(channel_list)
     channel_info = fill_in_channel_info(vid_data, channel_info)
-    popularity_metrics = get_most_popular_and_least_popular_channel(vid_data)
-    like_dislike_metrics = get_most_liked_and_disliked_channel(vid_data)
+    popularity_metrics = get_most_popular_and_least_popular_channel(channel_info)
+    like_dislike_metrics = get_most_liked_and_disliked_channel(channel_info)
 
     print('Popularity Metrics: {}'.format(popularity_metrics))
     print('Like Dislike Metrics: {}'.format(like_dislike_metrics))
